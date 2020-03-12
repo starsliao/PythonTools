@@ -28,7 +28,7 @@ setup(
     packages = find_packages(),
     include_package_data = True,
     platforms = "any",
-    install_requires = ["psutil==5.4.8"],
+    install_requires = ["psutil==5.6.6"],
     classifiers=[
         'Intended Audience :: System Administrators',
         'Operating System :: POSIX :: Linux',
