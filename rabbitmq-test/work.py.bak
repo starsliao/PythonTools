@@ -1,0 +1,79 @@
+#!/usr/bin/env python3.6
+import multiprocessing
+import threading
+import pika
+import sys,time,logging
+class Worker:
+    def __init__(self, username, password, host, vhost, queue_name):
+        self.username = username
+        self.password = password
+        self.host = host
+        self.vhost = vhost
+        self.queue_name = queue_name
+        self.connection = None
+        self.channel = None
+        self.credentials = None
+
+        logger = logging.getLogger("MQ_WORKER")
+        logger.setLevel(logging.DEBUG)
+        fh = logging.FileHandler("/var/log/mq_worker.log")
+        fh.setLevel(logging.DEBUG)
+        ch = logging.StreamHandler()
+        ch.setLevel(logging.INFO)
+        formatter = logging.Formatter("[%(asctime)s] [%(levelname)s] %(message)s")
+        ch.setFormatter(formatter)
+        fh.setFormatter(formatter)
+        logger.addHandler(ch)
+        logger.addHandler(fh)
+
+        self.logger = logger
+
+    def conn(self):
+        if self.connection and not self.connection.is_closed:
+            self.connection.close()
+        self.credentials = pika.PlainCredentials(self.username, self.password)
+        is_closed = True
+        while is_closed:
+            try:
+                self.connection = pika.BlockingConnection(pika.ConnectionParameters(self.host,5672,self.vhost,self.credentials,heartbeat=60))
+                is_closed = False
+            except:
+                self.logger.error('[main] AMQPConnectionError')
+                time.sleep(2)
+        self.channel = self.connection.channel()
+        self.channel.basic_qos(prefetch_count=1)
+        self.channel.queue_declare(queue=self.queue_name, durable=True)
+        self.logger.info('[Connect Successfully] Waiting for messages. To exit press CTRL+C')
+
+    def task(self,body,ch,method):
+        self.logger.info(f'Received: {body}')
+        time.sleep(3)
+        self.logger.info(f'Done: {body}')
+        ch.basic_ack(delivery_tag=method.delivery_tag)
+        self.logger.info(f'ACK: {body}\n')
+
+    def receive(self,callback):
+        def cb(ch, method, properties, body):
+            t = threading.Thread(target=callback, args=(body,ch,method,))
+            t.daemon = True
+            t.start()
+            while t.is_alive():
+                time.sleep(5)
+                self.logger.info(f'[heartbeat] Heart beating...')
+                #print(f'[INFO] [{time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())}] heart beating')
+                try:
+                    self.connection.process_data_events()
+                except Exception as err:
+                    self.logger.error(f'[heartbeat] {err}')
+                    self.conn()
+                    self.channel.basic_consume(queue=self.queue_name, on_message_callback=cb)
+                    self.channel.start_consuming()
+        self.conn()
+        self.channel.basic_consume(queue=self.queue_name, on_message_callback=cb)
+        self.channel.start_consuming()
+
+if __name__ == '__main__':
+    w = Worker('app','app','192.168.200.201','app','deploy')
+    w.receive(w.task)
+        #p = multiprocessing.Process(target=w.receive, args=(w.task,))
+        #p.start()
