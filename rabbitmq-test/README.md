@@ -1,1 +1,1 @@
-# rabbitmq
+### obsolete
