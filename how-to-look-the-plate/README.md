@@ -34,3 +34,7 @@ webhook = 'https://oapi.dingtalk.com/robot/send?access_token=xxx'
 ```
 ### 关注公众号【**全栈运维开发**】加入运维群交流，获取更多...
 ![](https://github.com/starsliao/Prometheus/blob/master/qr.jpg)
+
+
+### 截图
+![](https://github.com/starsliao/tools/raw/master/how-to-look-the-plate/capture.jpg)
