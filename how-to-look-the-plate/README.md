@@ -32,3 +32,5 @@ webhook = 'https://oapi.dingtalk.com/robot/send?access_token=xxx'
 * 9-15 * * 1-5 /opt/rise.py
 0 8 * * 1-5 rm -rvf /tmp/.rise.json
 ```
+### 关注公众号【**全栈运维开发**】加入运维群交流，获取更多...
+![](https://github.com/starsliao/Prometheus/blob/master/qr.jpg)
