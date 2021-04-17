@@ -1,4 +1,4 @@
-# 作为一个运维，如何优雅的炒币？
+# 运维同学，如何优雅的炒币？
 
 ## 痛点分析：
 1. 在币安和火币都有交易，需要经常切换APP来查看资产涨跌情况。
@@ -40,7 +40,7 @@ python3 setup.py install
 ```
 
 完整代码请参考github或点击阅读原文
-
+https://github.com/starsliao/tools/tree/master/blockchain
 
 
 ## 部分代码解析：
