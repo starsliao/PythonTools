@@ -1,1 +1,39 @@
-1
+使用UOS微信协议，web版接口复活！实现一个微信群报价机器人
+
+如果之前你的微信提示不能登录web端，使得itchat等基于微信网页版模拟操作的库无法使用，那么这个更新将会是你的福音。因为这个修改版的itchat已经支持使用UOS微信桌面版协议实现登录！
+
+## 如何使用：
+安装修改版的ItChat即可：
+
+```
+pip3 install git+https://github.com/starsliao/ItChat.git
+```
+
+对已有使用itchat库编写的代码无任何侵入性，只是重新安装下这个修改版的ithcta即可。
+
+对itchat不熟悉的同学可以参考gitlab项目说明：
+https://github.com/starsliao/ItChat
+
+## 原理说明：
+
+原理很简单：UOS下的微信只是网页版套了个electron。所以目前采用的绕过web端的限制方式，其实是使用了UOS的桌面版微信请求头，只要在请求的地址上首先加一个?target=t 就是这样：https://wx.qq.com/?target=t 然后在扫码登陆后拦截 https://wx.qq.com/cgi-bin/mmwebwx-bin/webwxnewloginpage 这个请求，并在请求头上添加两个固定的参数：
+```
+extspam ='Gp8ICJkIEpkICggwMDAwMDAwMRAGGoAI1GiJSIpeO1RZTq9QBKsRbPJdi84ropi16EYI10WB6g74sGmRwSNXjPQnYUKYotKkvLGpshucCaeWZMOylnc6o2AgDX9grhQQx7fm2DJRTyuNhUlwmEoWhjoG3F0ySAWUsEbH3bJMsEBwoB//0qmFJob74ffdaslqL+IrSy7LJ76/G5TkvNC+J0VQkpH1u3iJJs0uUYyLDzdBIQ6Ogd8LDQ3VKnJLm4g/uDLe+G7zzzkOPzCjXL+70naaQ9medzqmh+/SmaQ6uFWLDQLcRln++wBwoEibNpG4uOJvqXy+ql50DjlNchSuqLmeadFoo9/mDT0q3G7o/80P15ostktjb7h9bfNc+nZVSnUEJXbCjTeqS5UYuxn+HTS5nZsPVxJA2O5GdKCYK4x8lTTKShRstqPfbQpplfllx2fwXcSljuYi3YipPyS3GCAqf5A7aYYwJ7AvGqUiR2SsVQ9Nbp8MGHET1GxhifC692APj6SJxZD3i1drSYZPMMsS9rKAJTGz2FEupohtpf2tgXm6c16nDk/cw+C7K7me5j5PLHv55DFCS84b06AytZPdkFZLj7FHOkcFGJXitHkX5cgww7vuf6F3p0yM/W73SoXTx6GX4G6Hg2rYx3O/9VU2Uq8lvURB4qIbD9XQpzmyiFMaytMnqxcZJcoXCtfkTJ6pI7a92JpRUvdSitg967VUDUAQnCXCM/m0snRkR9LtoXAO1FUGpwlp1EfIdCZFPKNnXMeqev0j9W9ZrkEs9ZWcUEexSj5z+dKYQBhIICviYUQHVqBTZSNy22PlUIeDeIs11j7q4t8rD8LPvzAKWVqXE+5lS1JPZkjg4y5hfX1Dod3t96clFfwsvDP6xBSe1NBcoKbkyGxYK0UvPGtKQEE0Se2zAymYDv41klYE9s+rxp8e94/H8XhrL9oGm8KWb2RmYnAE7ry9gd6e8ZuBRIsISlJAE/e8y8xFmP031S6Lnaet6YXPsFpuFsdQs535IjcFd75hh6DNMBYhSfjv456cvhsb99+fRw/KVZLC3yzNSCbLSyo9d9BI45Plma6V8akURQA/qsaAzU0VyTIqZJkPDTzhuCl92vD2AD/QOhx6iwRSVPAxcRFZcWjgc2wCKh+uCYkTVbNQpB9B90YlNmI3fWTuUOUjwOzQRxJZj11NsimjOJ50qQwTTFj6qQvQ1a/I+MkTx5UO+yNHl718JWcR3AXGmv/aa9rD1eNP8ioTGlOZwPgmr2sor2iBpKTOrB83QgZXP+xRYkb4zVC+LoAXEoIa1+zArywlgREer7DLePukkU6wHTkuSaF+ge5Of1bXuU4i938WJHj0t3D8uQxkJvoFi/EYN/7u2P1zGRLV4dHVUsZMGCCtnO6BBigFMAA='
+client-version' = '2.0.0'
+```
+这样就可以完美使用桌面版协议了。
+
+# 开发一个微信群数字货币报价机器人：
+
+## 实现功能：
+1. 基于itchat库实现微信群机器人，只需要把该微信号加入到对应的群，群成员发送币种名称消息即可触发机器人报价。
+2. 目前接入了币安，火币，抹茶3个交易所的行情数据。
+3. 这些都是开放的接口不需要认证。
+4. 记得使用非国内的服务器来请求这些接口。
+5. 另外基于apscheduler写了个简单的定时任务，可定时推送消息到微信群。
+
+## 截图：
+
+
+## 完整代码请参考gitlab：
+https://github.com/starsliao/tools/tree/master/wechatbot
