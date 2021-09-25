@@ -36,4 +36,4 @@ client-version' = '2.0.0'
 
 
 ## 完整代码请参考gitlab：
-https://github.com/starsliao/tools/tree/master/wechatbot
+https://github.com/starsliao/tools/blob/master/wechatbot/wechatbot.py
