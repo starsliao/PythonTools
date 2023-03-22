@@ -33,7 +33,7 @@ client-version' = '2.0.0'
 5. 另外基于apscheduler写了个简单的定时任务，可定时推送消息到微信群。
 
 ## 截图：
-
+![](https://raw.githubusercontent.com/starsliao/PyTools/master/wechatbot/bot.png)
 
 ## 完整代码请参考gitlab：
 https://github.com/starsliao/tools/blob/master/wechatbot/wechatbot.py
