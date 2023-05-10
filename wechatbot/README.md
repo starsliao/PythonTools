@@ -6,13 +6,10 @@
 安装修改版的ItChat即可：
 
 ```
-pip3 install git+https://github.com/starsliao/ItChat.git
+pip3 install git+https://github.com/why2lyj/ItChat-UOS.git
 ```
 
-对已有使用itchat库编写的代码无任何侵入性，只是重新安装下这个修改版的ithcta即可。
-
-对itchat不熟悉的同学可以参考gitlab项目说明：
-https://github.com/starsliao/ItChat
+对itchat不熟悉的同学可以参考该项目说明
 
 ## 原理说明：
 
