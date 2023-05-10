@@ -6,6 +6,7 @@
 安装修改版的ItChat即可：
 
 ```
+yum install xdg-utils -y
 pip3 install git+https://github.com/why2lyj/ItChat-UOS.git
 ```
 
