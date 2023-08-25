@@ -4,7 +4,7 @@
 
 #### lastest psutil maybe required
 ```
-# yum install -y gcc python-devel dmidecode
+# yum install -y gcc python-devel dmidecode pciutils
 # pip install -U setuptools 
 # pip install -U psutil
 ```
