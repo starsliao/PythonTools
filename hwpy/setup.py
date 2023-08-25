@@ -14,21 +14,21 @@ with open("README.md", "r") as fh:
 
 setup(
     name = "hwpy",
-    version = "0.3.7",
+    version = "0.3.8",
     keywords = ("pip", "hwpy","Hardware","硬件检测"),
     description = "Get linux server hardware information. 获取Linux服务器硬件明细。",
     long_description = long_description,
     long_description_content_type="text/markdown",
     license = "MIT Licence",
 
-    url = "https://github.com/starsliao/hwpy",
+    url = "https://github.com/starsliao/PythonTools",
     author = "Stars Liao",
     author_email = "starsliao@163.com",
 
     packages = find_packages(),
     include_package_data = True,
     platforms = "any",
-    install_requires = ["psutil==5.6.6"],
+    install_requires = ["psutil==5.9.5"],
     classifiers=[
         'Intended Audience :: System Administrators',
         'Operating System :: POSIX :: Linux',
