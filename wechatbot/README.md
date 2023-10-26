@@ -8,7 +8,7 @@
 ```
 yum install xdg-utils -y
 pip3 uninstall itchat
-pip3 install git+https://github.com/why2lyj/ItChat-UOS.git
+pip3 install git+https://github.com/StarsL-cn/ItChat-UOS.git
 ```
 
 对itchat不熟悉的同学可以参考该项目说明
